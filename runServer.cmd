@@ -1,0 +1,2 @@
+bun ./server.js
+pause
