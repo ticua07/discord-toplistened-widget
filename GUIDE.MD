@@ -1,41 +1,189 @@
-# Installation guide!!
+# 🚀 Installation Guide
 
-First, go to https://discord.com/developers/applications (be signed in to your account in the web browser), then open the inspect tools (CTRL + SHIFT + I), go to the console tab and paste the "RUNME IN WEB BROWSER" script
+> **Disclaimer**
+>
+> This project was mostly **vibe coded** as a fun side project. While it works, it isn't representative of how I normally write my code.
 
-NOTE: You might have to type "allow pasting" in the console first to paste the script.
+---
 
-It will probably ask you for a captcha and maybe your password + 2fa
+## Prerequisites
 
+Before starting, make sure you have:
 
-Once you're finished the script (you know you finished if you are at the widget screen. Don't touch anything) copy the 3 DISCORD_ lines (one by one not all at the same time) and paste them into the .env file
+- **Bun** installed: https://bun.sh/
+- A Discord account
+- A Spotify account
 
-the .env file will look something like this
+---
 
-```
+# 1. Set up the Discord Application
+
+Go to:
+
+https://discord.com/developers/applications
+
+Make sure you're signed into the Discord account you want to use.
+
+### Run the setup script
+
+1. Open Developer Tools (`Ctrl + Shift + I`)
+2. Go to the **Console** tab.
+3. Paste the **"RUNME IN WEB BROWSER"** script.
+
+> **Note**
+> If Discord prevents you from pasting into the console, type:
+>
+> ```
+> allow pasting
+> ```
+>
+> and press Enter before pasting the script.
+
+During the process Discord may ask you to complete:
+
+- a CAPTCHA
+- your password
+- 2FA verification
+
+This is normal.
+
+---
+
+## Copy the generated values
+
+When the script finishes, you'll end up on the widget screen.
+
+**Don't click anything else.**
+
+Copy these three values **one at a time** into your `.env` file:
+
+- `DISCORD_APP_ID`
+- `DISCORD_USER_ID`
+- `DISCORD_BOT_TOKEN`
+
+Your `.env` should look similar to this:
+
+```env
 SPOTIFY_CLIENT_ID=
 SPOTIFY_CLIENT_SECRET=
 SPOTIFY_REDIRECT_URI=http://127.0.0.1:8888/callback
 
-
 DISCORD_APP_ID=87234178123782
 DISCORD_USER_ID=8123891238912389
-DISCORD_BOT_TOKEN=REALLY LONG TEXT
+DISCORD_BOT_TOKEN=REALLY_LONG_TOKEN
 ```
 
-after that you go to https://developer.spotify.com/dashboard logged in with the spotify account you want to track the songs with.
+---
 
-Create an app by clicking on the "Create app" button.
+# 2. Create a Spotify Application
 
-Set a name and description but most importantly add `http://127.0.0.1:8888/callback` to the Redirect URIs or IT WILL NOT WORK.
+Open:
 
-note: if spotify asks, set the app as development mode
+https://developer.spotify.com/dashboard
 
-Then click on the checkbox next to Web Api, agree to ToS and save the app
+Sign in with the Spotify account you want the widget to track.
 
-Once finished copy the client id and put it next to `SPOTIFY_CLIENT_ID` and do the same for `SPOTIFY_CLIENT_SECRET` (you might have to click on the "View Client Secret" button for it to show up)
+Create a new application by clicking **Create app**.
 
-# Final step
+Fill in any name and description you like.
 
-Now we're all set up, run `bun server.js` and go to `http://127.0.0.1:8888/login` in your browser. Accept the spotify application and close the app with Ctrl+C
+## Important
 
-finally run `bun updateRefresh.js` and then `.\install-startup-task.cmd` to autorun the script each time you turn on your PC.
+Add the following Redirect URI:
+
+```
+http://127.0.0.1:8888/callback
+```
+
+⚠️ **If you forget this step, authentication will not work.**
+
+If Spotify asks whether the app should be in Development Mode, choose **Yes**.
+
+When creating the app:
+
+- Enable the **Web API** checkbox.
+- Accept the Terms of Service.
+- Save the application.
+
+---
+
+## Copy your Spotify credentials
+
+From your Spotify application's dashboard:
+
+- Copy the **Client ID** into:
+
+```
+SPOTIFY_CLIENT_ID=
+```
+
+- Click **View Client Secret**
+- Copy the **Client Secret** into:
+
+```
+SPOTIFY_CLIENT_SECRET=
+```
+
+---
+
+# 3. Authenticate with Spotify
+
+Start the authentication server:
+
+```bash
+bun server.js
+```
+
+Open your browser and visit:
+
+```
+http://127.0.0.1:8888/login
+```
+
+Authorize the Spotify application.
+
+Once the browser confirms authentication, return to the terminal and stop the server with:
+
+```text
+Ctrl + C
+```
+
+---
+
+# 4. Update your profile for the first time
+
+Run:
+
+```bash
+bun updateRefresh.js
+```
+
+If the widget appears in your profile then you're done with the setup!
+
+---
+
+# 5. Enable Auto Startup (Optional)
+
+If you want the widget to update automatically every time your PC starts, run:
+
+```powershell
+.\install-startup-task.cmd
+```
+
+---
+
+# 🎉 Done!
+
+Everything should now be configured and ready to go.
+
+If something doesn't work, double-check:
+
+- ✅ Bun is installed.
+- ✅ Your `.env` values are correct.
+- ✅ The Spotify Redirect URI is exactly:
+
+```
+http://127.0.0.1:8888/callback
+```
+
+- ✅ You copied the Discord values correctly.
