@@ -164,7 +164,7 @@ If the widget appears in your profile then you're done with the setup!
 
 # 5. Enable Auto Startup (Optional)
 
-If you want the widget to update automatically every time your PC starts, run:
+If you want the widget to update automatically every time your PC starts, run as administrator:
 
 ```powershell
 .\install-startup-task.cmd
